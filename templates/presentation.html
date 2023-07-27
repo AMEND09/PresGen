@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Article Presentation</title>
+</head>
+<body>
+    <h1>Converted Presentation</h1>
+    <div>
+        {{ article_text|safe }}
+    </div>
+
+    <hr>
+
+    <h2>Download Presentation</h2>
+    <form action="/download" method="post">
+        <textarea name="presentation_text" rows="10" cols="80">{{ article_text }}</textarea>
+        <br>
+        <input type="submit" value="Download as Text File">
+    </form>
+</body>
+</html>
