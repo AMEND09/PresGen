@@ -1,15 +1,30 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Marp Presentation</title>
-<script src="https://unpkg.com/marp/dist/marp.min.js"></script>
+  <title>Article to Presentation Converter</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div id="marp"></div>
-<script>
-var marp = new Marp({
-element: "#marp",
-});
-marp.load("my-presentation.md");
-</script>
+  <h1>Article to Presentation Converter</h1>
+  <textarea id="article" placeholder="Paste your article here..."></textarea>
+  <button id="convertBtn">Convert to Presentation</button>
+  <div id="presentationContainer"></div>
+
+  <script>
+    document.getElementById('convertBtn').addEventListener('click', async () => {
+      const article = document.getElementById('article').value;
+      const response = await fetch('/convert', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ article }),
+      });
+
+      const { html, css } = await response.json();
+      document.getElementById('presentationContainer').innerHTML = html;
+      const style = document.createElement('style');
+      style.innerHTML = css;
+      document.head.appendChild(style);
+    });
+  </script>
 </body>
+</html>
